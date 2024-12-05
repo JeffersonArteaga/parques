@@ -1,5 +1,13 @@
 /*Selección de esquinas*/
 
+
+.container-selection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 .corner-selection {
             margin: 20px auto;
             display: flex;
@@ -50,7 +58,7 @@
             cursor: not-allowed;
         }
         #message {
-            margin-top: 20px;
+            margin: 20px 0;
             font-size: 18px;
             color: #333;
         }

@@ -19,9 +19,18 @@ h1 {
 }
 
 /* Container Styles */
+
+.game-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+}
+
 .parchis-container {
     width: 600px;
-    margin: 20px auto;
+    margin: 20px 30px;
 }
 
 .parchis {
@@ -156,6 +165,7 @@ h1 {
 .btn-dice {
     background-color: blueviolet;
     color: white;
+    margin: 0 5px;
 }
 
 .row {
@@ -337,12 +347,21 @@ h1 {
     border-color: gray; /* Cambia el color del borde */
 }
 
-#playersListContainer {
+/* #playersListContainer {
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
     margin-top: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: 300px;
+} */
+
+#playersListContainer {
+    margin-top: 20px auto;
     padding: 10px;
     background-color: #f9f9f9;
     border: 1px solid #ccc;
@@ -358,4 +377,11 @@ h1 {
 #playersList li {
     margin: 5px 0;
     font-size: 16px;
+}
+
+.container-dice-information{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
