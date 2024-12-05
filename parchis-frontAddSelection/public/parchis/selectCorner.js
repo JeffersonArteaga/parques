@@ -2,7 +2,7 @@ const creators = document.querySelectorAll('.creator');
 const confirmButton = document.getElementById('confirmButton');
 const startButton = document.getElementById('startGameButton');
 const message = document.getElementById('message');
-const gameBoard = document.querySelector('.parchis-container'); // El tablero del juego
+const gameBoard = document.querySelector('.game-container'); // El tablero del juego
 const endButton = document.getElementById('endButton'); // El botón de terminar juego
 
 // Estado de los jugadores y las esquinas
@@ -14,8 +14,6 @@ let availableColors = []; // Colores disponibles recibidos del servidor
 let username = null;
 let globalPlayerList = [];
 let game_state = false
-let isFirstGameStateReceived = false; // Bandera para la primera recepción de game_state
-let game_started = false;
 
 // Conectar al servidor usando WebSocket
 function connectToServer() {
@@ -78,30 +76,13 @@ function connectToServer() {
         } else if (data.type === "getGameState") {
             game_state = data.state;
             console.log("Estado del juego:", game_state);
-
-            // Verificar si es la primera vez que se recibe el estado del juego
-            if (!isFirstGameStateReceived) {
-                isFirstGameStateReceived = true;
-
-                if (game_state) {
-                    game_started = true;
-                    // Bloquear selección de colores
-                    creators.forEach(creator => {
-                        creator.classList.add('occupied');
-                        creator.style.pointerEvents = 'none'; // Bloquear interacción
-                    });
-
-                    // Mostrar mensaje indicando que el juego ya comenzó
-                    message.textContent = "El juego ya comenzó. No puedes seleccionar colores.";
-                }
-            } else {
-                // Si el juego está en progreso, iniciar la lógica del cliente
-                if (game_state && !game_started) {
-                    startGame();
-                }
-
+            if (game_state) {
+                startGame();
             }
-        }};
+        }
+        
+
+    };
 
     socket.onclose = () => {
         console.log("Desconectado del servidor.");
@@ -241,7 +222,8 @@ function startGame() {
     gameStarted = true;
     startButton.textContent = "Terminar Juego";
     confirmButton.disabled = true;
-    gameBoard.style.display = 'block';
+    // gameBoard.style.display = 'block';
+    gameBoard.style.display = 'flex';
     document.querySelector('section').style.display = 'none';
     message.textContent = "El juego ha comenzado, ¡que comience la acción!";
 }
