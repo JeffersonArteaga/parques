@@ -1,5 +1,7 @@
 //positions but starting from part poin house blue
 
+import { playerID } from './selectCorner.js';
+
 export const COORDINATES_MAP = {
     0: [59.5, 19.3], // punto partida casa azul
     1: [59.5, 23.9],
@@ -157,7 +159,8 @@ export const COORDINATES_MAP = {
 export const STEP_WIDTH = 11.67;
 export const STEP_HEIGHT = 4.6;
 
-export const PLAYERS = [ 'P1', 'P2', 'P3', 'P4' ]; 
+export const PLAYERS = [ 'P1', 'P2', 'P3', 'P4']; 
+
 
 export const BASE_POSITIONS = {
     P1: [600, 601, 602, 603],

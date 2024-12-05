@@ -1,3 +1,4 @@
+
 const creators = document.querySelectorAll('.creator');
 const confirmButton = document.getElementById('confirmButton');
 const startButton = document.getElementById('startGameButton');
@@ -9,11 +10,12 @@ const endButton = document.getElementById('endButton'); // El botón de terminar
 let selectedPlayer = null;
 let gameStarted = false; // Estado para saber si el juego ha iniciado
 const selectedPlayers = new Set(); // Guardará los IDs de los jugadores confirmados
-let socket = null; // WebSocket para comunicarse con el servidor
+export let socket = null; // WebSocket para comunicarse con el servidor
 let availableColors = []; // Colores disponibles recibidos del servidor
 let username = null;
-let globalPlayerList = [];
+export let globalPlayerList = [];
 let game_state = false
+export let playerID;
 
 // Conectar al servidor usando WebSocket
 function connectToServer() {
@@ -70,6 +72,7 @@ function connectToServer() {
         } else if (data.type === "connectedPlayers") {
             // Actualizar la lista de jugadores conectados
             console.log("Jugadores conectados:", data.players);
+            
             updatePlayerList(data.players);
         } else if (data.type === "error") {
             alert(data.message);
@@ -142,6 +145,11 @@ confirmButton.addEventListener('click', () => {
     }
 });
 
+function getConnectedPlayerIds() {
+    return globalPlayerList.map(player => player.playerId);
+}
+
+
 function updateColorOptions() {
     // Deshabilitar todas las esquinas que no estén disponibles
     creators.forEach(creator => {
@@ -169,30 +177,46 @@ function updateColorStart() {
     });
 }
 
-function updatePlayerList(players) {
+
+export function updatePlayerList(players) {
     const playersList = document.getElementById('playersList');
     playersList.innerHTML = ''; // Limpiar lista actual
 
+    
+    
     globalPlayerList = players;
+    console.log(globalPlayerList)
     players.forEach(player => {
         const listItem = document.createElement('li');
         listItem.textContent = `${player.username} (${player.color})`;
         playersList.appendChild(listItem); 
     });
 
+    const playersList2 = document.getElementById('playersList2');   
+    playersList2.innerHTML = ''; // Limpiar lista actual
+
+    players.forEach(player => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${player.username} (${player.color})`;
+        playersList2.appendChild(listItem); 
+    });
+
     // Verificar si hay al menos dos jugadores conectados
-    if (globalPlayerList.length >= 2) {
+    if (globalPlayerList.length >= 1) {
         startButton.disabled = false; // Habilitar el botón
         message.textContent = "Listo para comenzar. ¡Al menos dos jugadores están conectados!";
     } else {
         startButton.disabled = true; // Deshabilitar el botón
         message.textContent = "Esperando al menos dos jugadores para iniciar el juego.";
     }
+
+    playerID = getConnectedPlayerIds();
+    console.log(playerID);
 }
 
 function fetchConnectedPlayersPeriodically() {
     // Enviar solicitud al servidor para obtener la lista de jugadores conectados
-    if (socket && socket.readyState === WebSocket.OPEN && !gameStarted) {
+    if (socket && socket.readyState === WebSocket.OPEN ) {
         socket.send(JSON.stringify({
             type: "getConnectedPlayers"
         }));
@@ -247,4 +271,6 @@ endButton.addEventListener('click', () => {
 });
 
 message.textContent = "Selecciona tu esquina para empezar.";
-connectToServer(); // Llamada para establecer la conexión al servidor
+ // Llamada para establecer la conexión al servidor
+ connectToServer();
+

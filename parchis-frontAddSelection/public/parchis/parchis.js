@@ -1,7 +1,10 @@
 import { ParchisUI } from "./ui.js";
 import { BASE_POSITIONS, HOME_ENTRANCE, HOME_POSITIONS, PLAYERS, SAFE_POSITIONS, START_POSITIONS, STATE, TURNING_POINTS, diceImages } from "./constants.js";
+;
 
 export class Parchis {
+
+
     currentPositions = {
         P1: [],
         P2: [],
@@ -51,10 +54,18 @@ export class Parchis {
     }
 
     constructor() {
+        console.log("peee");
+
         this.listenDiceClick();
         this.listenResetClick();
         this.listenPieceClick();
         this.resetGame();
+         // Actualización periódica
+         this.startPeriodicUpdate();
+    }
+
+    startPeriodicUpdate() {
+        setInterval(() => {}, 1000); // Intervalo de 5000 ms (5 segundos)
     }
 
     listenDiceClick() {
@@ -288,3 +299,4 @@ export class Parchis {
 
   // ----------------------------------------------------- Parchis -----------------------------------------------------
 const parchis = new Parchis();
+//parchis.connectToServer();
