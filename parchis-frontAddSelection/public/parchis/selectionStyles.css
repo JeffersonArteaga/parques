@@ -1,0 +1,111 @@
+/*Selección de esquinas*/
+
+.corner-selection {
+            margin: 20px auto;
+            display: flex;
+            justify-content: space-around;
+            max-width: 600px;
+        }
+        .creator {
+            cursor: pointer;
+            padding: 10px;
+            transition: transform 0.2s;
+        }
+        .creator:hover {
+            transform: scale(1.1);
+        }
+        .circle {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #ddd;
+        }
+        .circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .selected {
+            border-color: gold !important;
+        }
+        #confirmButton, #startGameButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        #confirmButton:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        #startGameButton:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+
+/* Estilo para el jugador seleccionado */
+.creator.selected {
+    border: 4px solid #FFD700; /* Borde dorado para destacar */
+    background-color: rgba(255, 223, 0, 0.2); /* Fondo con transparencia */
+    box-shadow: 0 0 10px 5px rgba(255, 223, 0, 0.5); /* Resplandor */
+    transform: scale(1.1); /* Ligeramente más grande */
+    transition: all 0.1s ease; /* Animación suave */
+}
+
+/* Estilo para el texto del jugador seleccionado */
+.creator.selected p {
+    font-weight: bold;
+    color: #FFD700; /* Color dorado */
+}
+
+/* Estilo para el círculo dentro del jugador seleccionado */
+.creator.selected .circle {
+    border: 3px dashed #FFD700; /* Borde interno */
+}
+
+/* Botón activo cuando un jugador es seleccionado */
+#confirmButton:enabled {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#startGameButton:enabled {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#startGameButton:enabled:hover {
+    background-color: #218838;
+}
+
+#confirmButton:enabled:hover {
+    background-color: #218838;
+}
+
+.creator.occupied {
+    opacity: 0.5;
+    pointer-events: none; /* Deshabilita la interacción */
+    border-color: gray; /* Cambia el color del borde */
+}

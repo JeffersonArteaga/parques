@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parchis Game</title>
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./parchis/style.css">
+    <link rel="stylesheet" href="./parchis/selectionStyles.css">
+    <link rel="stylesheet" href="./parchis/diceStyles.css">
+</head>
+<body>
+    <!-- Título del juego -->
+    <header>
+        <h1 class="title">Parchis</h1>
+    </header>
+
+    <!-- Sección de esquinas -->
+
+    <section>
+        <h1>Selecciona tu esquina</h1>
+        <div class="corner-selection">
+            <div class="creator" player-id="P1" color="AZUL">
+                <div class="circle">
+                    <img src="./img/P1.PNG" alt="Player 1">
+                </div>
+                <p>Azul</p>
+            </div>
+            <div class="creator" player-id="P2" color="VERDE">
+                <div class="circle">
+                    <img src="./img/P2.PNG" alt="Player 2">
+                </div>
+                <p>Verde</p>
+            </div>
+            <div class="creator" player-id="P3" color="AMARILLO">
+                <div class="circle">
+                    <img src="./img/P3.PNG" alt="Player 3">
+                </div>
+                <p>Amarillo</p>
+            </div>
+            <div class="creator" player-id="P4" color="ROJO">
+                <div class="circle">
+                    <img src="./img/P4.PNG" alt="Player 4">
+                </div>
+                <p>Rojo</p>
+            </div>
+        </div>
+        <button id="confirmButton" class="action-button" disabled>Confirmar esquina</button>
+        <button id="startGameButton" class="action-button" disabled>Iniciar Juego</button>
+        <div id="message"></div>
+
+        <div id="playersListContainer">
+            <h3>Jugadores conectados:</h3>
+            <ul id="playersList"></ul>
+        </div>
+
+    </section>
+
+
+    <!-- Tablero de juego -->
+
+    <div class="parchis-container" style="display: none;">
+        <h1>A jugar !!!!</h1>
+        <div class="parchis">
+            <div class="player-bases">
+                <div class="player-base" player-id="P1">
+                    <img src="./img/P1.PNG" alt="Player 1">
+                </div>
+                <div class="player-base" player-id="P2">
+                    <img src="./img/P2.PNG" alt="Player 2">
+                </div>
+                <div class="player-base" player-id="P3">
+                    <img src="./img/P3.PNG" alt="Player 3">
+                </div>
+                <div class="player-base" player-id="P4">
+                    <img src="./img/P4.PNG" alt="Player 4">
+                </div>
+            </div>
+            <div class="player-pieces">
+                <!-- Fichas de los jugadores -->
+                <div class="player-piece" player-id="P1" piece="0"></div>
+                <div class="player-piece" player-id="P1" piece="1"></div>
+                <div class="player-piece" player-id="P1" piece="2"></div>
+                <div class="player-piece" player-id="P1" piece="3"></div>
+
+                <div class="player-piece" player-id="P2" piece="0"></div>
+                <div class="player-piece" player-id="P2" piece="1"></div>
+                <div class="player-piece" player-id="P2" piece="2"></div>
+                <div class="player-piece" player-id="P2" piece="3"></div>
+
+                <div class="player-piece" player-id="P3" piece="0"></div>
+                <div class="player-piece" player-id="P3" piece="1"></div>
+                <div class="player-piece" player-id="P3" piece="2"></div>
+                <div class="player-piece" player-id="P3" piece="3"></div>
+
+                <div class="player-piece" player-id="P4" piece="0"></div>
+                <div class="player-piece" player-id="P4" piece="1"></div>
+                <div class="player-piece" player-id="P4" piece="2"></div>
+                <div class="player-piece" player-id="P4" piece="3"></div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="row">
+                <button id="dice-btn" class="btn btn-dice">Lanzar dados</button>
+                <div class="dice-value"></div>
+                <button id="reset-btn" class="btn btn-reset">Resetear</button>
+            </div>
+            <h2 class="active-player">Turno: <span></span></h2>
+
+            <div class="container-dice">
+                
+                <div class="dice" id="dice">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Alea_1.png" alt="Dice" id="diceImg1" />
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Alea_1.png" alt="Dice" id="diceImg2" />
+                </div>
+
+            </div>
+
+            
+        </div>
+        <button id="endButton" class="action-button">Terminar Juego</button>
+    </div>
+
+    
+
+    <!-- Sección de creadores -->
+    <!--
+    
+    <footer>
+        <div class="creators">
+            <div class="creator" player-id="P1">
+                <div class="circle">
+                    <img src="./img/P1.PNG" alt="Player 1">
+                </div>
+                <p>Player 1</p>
+            </div>
+            <div class="creator" player-id="P2">
+                <div class="circle">
+                    <img src="./img/P2.PNG" alt="Player 2">
+                </div>
+                <p>Player 2</p>
+            </div>
+            <div class="creator" player-id="P3">
+                <div class="circle">
+                    <img src="./img/P3.PNG" alt="Player 3">
+                </div>
+                <p>Player 3</p>
+            </div>
+            <div class="creator" player-id="P4">
+                <div class="circle">
+                    <img src="./img/P4.PNG" alt="Player 4">
+                </div>
+                <p>Player 4</p>
+            </div>
+        </div>        
+    </footer>
+    
+    -->
+
+    <script src="./parchis/parchis.js" type="module"></script>
+    <script src="./parchis/selectCorner.js" type="module"></script>
+</body>
+</html>
