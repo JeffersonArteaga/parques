@@ -222,7 +222,7 @@ function startGame() {
     gameStarted = true;
     startButton.textContent = "Terminar Juego";
     confirmButton.disabled = true;
-    // gameBoard.style.display = 'block';
+    //gameBoard.style.display = 'block';
     gameBoard.style.display = 'flex';
     document.querySelector('section').style.display = 'none';
     message.textContent = "El juego ha comenzado, ¡que comience la acción!";
