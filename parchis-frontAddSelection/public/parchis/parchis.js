@@ -105,20 +105,6 @@ export class Parchis {
     }
 
     incrementTurn() {
-        // let nextTurn = this.turn;
-        // for (let i = 0; i < PLAYERS.length; i++) {
-        //     nextTurn = (nextTurn + 1) % PLAYERS.length; // Avanzar al siguiente jugador
-
-        //     const player = PLAYERS[nextTurn];
-        //     const elegiblePieces = this.getElegiblePieces(player);
-    
-        //     if (elegiblePieces.length > 0) {
-        //         this.turn = nextTurn;
-        //         this.diceValues = [];
-        //         this.state = STATE.DICE_NOT_ROLLED;
-        //         return;
-        //     }
-        // }
         this.turn = this.turn === 3 ? 0 : this.turn + 1;
         // Si nadie tiene movimientos posibles, reiniciar los dados y turno
         this.diceValues = [];
@@ -178,7 +164,6 @@ export class Parchis {
             if (this.remainingDiceValues.every(value => value === undefined)) {
                 ParchisUI.unhighlightPieces();
                 this.state = STATE.DICE_NOT_ROLLED;
-                // this.incrementTurn();
             }
         }
     }
