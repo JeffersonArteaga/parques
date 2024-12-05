@@ -181,7 +181,7 @@ function updatePlayerList(players) {
     });
 
     // Verificar si hay al menos dos jugadores conectados
-    if (globalPlayerList.length >= 2) {
+    if (globalPlayerList.length >= 1) {
         startButton.disabled = false; // Habilitar el botón
         message.textContent = "Listo para comenzar. ¡Al menos dos jugadores están conectados!";
     } else {
