@@ -19,7 +19,7 @@ export let playerID;
 
 // Conectar al servidor usando WebSocket
 function connectToServer() {
-    socket = new WebSocket("ws://127.0.0.1:12345");
+    socket = new WebSocket("https://ssnbt34f-12345.brs.devtunnels.ms//");
 
     socket.onopen = () => {
         console.log("Conectado al servidor.");

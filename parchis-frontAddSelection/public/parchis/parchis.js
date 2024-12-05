@@ -154,7 +154,7 @@ export class Parchis {
                 return;
             }
     
-            const diceChoice = parseInt(prompt(`Player ${player}, choose a dice value to move (1: ${this.remainingDiceValues[0]}, 2: ${this.remainingDiceValues[1]})`), 10) - 1;
+            const diceChoice = parseInt(prompt(`Mueve ${player}, selecciona el número de casillas para mover tu ficha (1: ${this.remainingDiceValues[0]}, 2: ${this.remainingDiceValues[1]})`), 10) - 1;
             const diceValue = this.remainingDiceValues[diceChoice];
     
             this.remainingDiceValues[diceChoice] = undefined;
