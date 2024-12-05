@@ -1,10 +1,7 @@
 import { ParchisUI } from "./ui.js";
 import { BASE_POSITIONS, HOME_ENTRANCE, HOME_POSITIONS, PLAYERS, SAFE_POSITIONS, START_POSITIONS, STATE, TURNING_POINTS, diceImages } from "./constants.js";
-;
 
 export class Parchis {
-
-
     currentPositions = {
         P1: [],
         P2: [],
@@ -54,18 +51,10 @@ export class Parchis {
     }
 
     constructor() {
-        console.log("peee");
-
         this.listenDiceClick();
         this.listenResetClick();
         this.listenPieceClick();
         this.resetGame();
-         // Actualización periódica
-         this.startPeriodicUpdate();
-    }
-
-    startPeriodicUpdate() {
-        setInterval(() => {}, 1000); // Intervalo de 5000 ms (5 segundos)
     }
 
     listenDiceClick() {
@@ -73,22 +62,14 @@ export class Parchis {
     }
 
     onDiceClick() {
-        // Llamar a rollTwoDice y capturar los valores retornados
         const [randomIndex1, randomIndex2] = rollTwoDice();
-
-        // Asignar los valores de los dados a this.diceValues
-        this.diceValues = [randomIndex1 + 1, randomIndex2 + 1];  // Convertir el índice a valor de dado (1-6)
-
-        // Actualizar el estado
+        this.diceValues = [randomIndex1 + 1, randomIndex2 + 1];
         this.state = STATE.DICE_ROLLED;
-
-        // Verificar las piezas elegibles
         this.checkElegiblePieces();
     }
 
     checkElegiblePieces() {
         const player = PLAYERS[this.turn];
-
         const elegiblePieces = this.getElegiblePieces(player);
         if (elegiblePieces.length) {
             ParchisUI.highlightPieces(player, elegiblePieces);
@@ -125,6 +106,8 @@ export class Parchis {
 
     incrementTurn() {
         this.turn = this.turn === 3 ? 0 : this.turn + 1;
+        // Si nadie tiene movimientos posibles, reiniciar los dados y turno
+        this.diceValues = [];
         this.state = STATE.DICE_NOT_ROLLED;
     }
 
@@ -136,8 +119,8 @@ export class Parchis {
                 this.setPiecePosition(player, piece, this.currentPositions[player][piece]);
             });
         });
-
         this.turn = 0;
+        this.diceValues = [];
         this.state = STATE.DICE_NOT_ROLLED;
     }
 
@@ -155,37 +138,22 @@ export class Parchis {
         this.handlePieceClick(player, piece);
     }
 
-    // handlePieceClick(player, piece) {
-    //     if (player === PLAYERS[this.turn] && this.state === STATE.DICE_ROLLED) {
-    //         const currentPosition = this.currentPositions[player][piece];
-    //         if (BASE_POSITIONS[player].includes(currentPosition)) {
-    //             this.setPiecePosition(player, piece, START_POSITIONS[player]);
-    //             this.state = STATE.DICE_NOT_ROLLED;
-    //             return;
-    //         }
-    
-    //         ParchisUI.unhighlightPieces(); // <----
-    
-    //         // Allow choosing which dice value to use
-    //         const diceChoice = parseInt(prompt(`Player ${player}, choose a dice value to move (1: ${this.remainingDiceValues[0]}, 2: ${this.remainingDiceValues[1]})`), 10) - 1;
-    //         const diceValue = this.remainingDiceValues[diceChoice];
-    
-    //         this.remainingDiceValues[diceChoice] = undefined;
-    
-    //         this.movePiece(player, piece, diceValue);
-    //     }
-    // }
-
     handlePieceClick(player, piece) {
         if (player === PLAYERS[this.turn] && this.state === STATE.DICE_ROLLED) {
             const currentPosition = this.currentPositions[player][piece];
             if (BASE_POSITIONS[player].includes(currentPosition)) {
+                const diceSum = this.diceValues.reduce((a, b) => a + b, 0);
+            
+                if (diceSum % 2 !== 0) { // Cambia la lógica si tus reglas son diferentes
+                    alert("No puedes salir de la base con este lanzamiento.");
+                    return;
+                }
+            
                 this.setPiecePosition(player, piece, START_POSITIONS[player]);
                 this.state = STATE.DICE_NOT_ROLLED;
                 return;
             }
     
-            // Allow choosing which dice value to use
             const diceChoice = parseInt(prompt(`Player ${player}, choose a dice value to move (1: ${this.remainingDiceValues[0]}, 2: ${this.remainingDiceValues[1]})`), 10) - 1;
             const diceValue = this.remainingDiceValues[diceChoice];
     
@@ -193,24 +161,18 @@ export class Parchis {
     
             this.movePiece(player, piece, diceValue);
     
-            // Only unhighlight pieces if there are no remaining dice values
             if (this.remainingDiceValues.every(value => value === undefined)) {
                 ParchisUI.unhighlightPieces();
-                this.incrementTurn();
+                this.state = STATE.DICE_NOT_ROLLED;
             }
         }
-    }
-
-    setPiecePosition(player, piece, newPosition) {
-        ParchisUI.setPiecePosition(player, piece, newPosition);
-        this.currentPositions[player][piece] = newPosition;
     }
 
     movePiece(player, piece, moveBy) {
         const interval = setInterval(() => {
             moveBy--;
             this.incrementPiecePosition(player, piece);
-
+    
             if (moveBy === 0) {
                 clearInterval(interval);
                 if (this.hasPlayerWon(player)) {
@@ -226,13 +188,18 @@ export class Parchis {
                     this.state = STATE.DICE_ROLLED;
                     return;
                 }
-                if (this.remainingDiceValues.length === 0) {
+                if (this.remainingDiceValues.every(value => value === undefined)) {
                     this.incrementTurn();
                 } else {
                     this.state = STATE.DICE_ROLLED;
                 }
             }
         }, 200);
+    }
+
+    setPiecePosition(player, piece, newPosition) {
+        ParchisUI.setPiecePosition(player, piece, newPosition);
+        this.currentPositions[player][piece] = newPosition;
     }
 
     checkForKill(player, piece) {
@@ -273,9 +240,7 @@ export class Parchis {
     }
 }
 
-// ----------------------------------------------------- Dados -----------------------------------------------------
-
-  function rollTwoDice() {
+function rollTwoDice() {
     const randomIndex1 = Math.floor(Math.random() * 6);
     const randomIndex2 = Math.floor(Math.random() * 6);
     const randomImage1 = diceImages[randomIndex1];
@@ -293,10 +258,7 @@ export class Parchis {
       diceImg2.classList.remove("rotate");
     }, 500);
   
-    // Retornar los valores de los índices aleatorios
     return [randomIndex1, randomIndex2];
-  }
+}
 
-  // ----------------------------------------------------- Parchis -----------------------------------------------------
 const parchis = new Parchis();
-//parchis.connectToServer();
