@@ -385,3 +385,22 @@ h1 {
     align-items: center;
     flex-direction: column;
 }
+
+#playersListContainer2 {
+    margin-top: 20px auto;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: 300px;
+}
+
+#playersList2 {
+    list-style-type: none;
+    padding: 0;
+}
+
+#playersList2 li {
+    margin: 5px 0;
+    font-size: 16px;
+}

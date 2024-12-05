@@ -81,7 +81,7 @@ async def handle_client(websocket):
             elif data["type"] == "getConnectedPlayers":
                 # Enviar la lista de jugadores conectados                
                 players = [
-                    {"username": info["username"], "color": info["color"]}
+                    {"username": info["username"], "color": info["color"], "playerId": info["playerId"]}
                     for info in connected_clients.values() if info["username"]
                 ]
                 
